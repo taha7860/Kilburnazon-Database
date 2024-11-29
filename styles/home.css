@@ -1,0 +1,63 @@
+/* Reset Styles */
+:root {
+    --primary-colour: rgb(20, 25, 32);
+    --nav-colour: rgb(37, 47, 61);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header/Logo Bar */
+.header {
+    background-color: var(--primary-colour); /* Amazon's header background color */
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-container {
+    flex: 1;
+}
+
+.logo img {
+    height: 50px; /* Match the logo size */
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--nav-colour); /* Amazon's navbar background color */
+    padding: 10px 20px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar li {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.navbar a:hover {
+    background-color: #232f3e; /* Highlight effect */
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+}
