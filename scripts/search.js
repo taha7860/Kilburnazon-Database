@@ -1,11 +1,22 @@
+const originalContent = document.getElementById('results').innerHTML;
+
 function searchEmployee(query) {
-    if (query.length === 0 ) {
-        document.getElementById('results').innerHTML = '';
+    const trimmedQuery = query.trim();
+
+    const position = document.getElementById('position-filter').querySelector('select').value;
+    const department = document.getElementById('department-filter').querySelector('select').value;
+    const office = document.getElementById('office-filter').querySelector('select').value;
+
+    if (trimmedQuery.length === 0  && !position && !department && !office) {
+        document.getElementById('results').innerHTML = originalContent;
         return;
     }
-
-    const trimmedQuery = query.trim();
-    fetch('employees.php?query=' + encodeURIComponent(trimmedQuery))
+    
+    fetch('employees.php?' + 
+        'query=' + encodeURIComponent(trimmedQuery) +
+        '&position=' + encodeURIComponent(position) +
+        '&department=' + encodeURIComponent(department) +
+        '&office=' + encodeURIComponent(office))
         .then(response => {
             if (!response.ok) {
                 throw new Error("Network response was not ok: " + response.statusText);

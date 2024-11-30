@@ -1,13 +1,12 @@
-/* Reset Styles */
-:root {
-    --primary-colour: rgb(20, 25, 32);
-    --nav-colour: rgb(37, 47, 61);
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+:root {
+    --primary-colour: rgb(20, 25, 32); /* Main color */
+    --nav-colour: rgb(37, 47, 61); /* Navbar background color */
 }
 
 /* Header/Logo Bar */
@@ -43,15 +42,21 @@
     font-size: 14px;
 }
 
+/* More Specific Navbar Links */
 .navbar a {
-    color: #ffffff;
-    text-decoration: none;
+    color: #ffffff; /* White text color */
+    text-decoration: none; /* Remove underline */
     padding: 5px 10px;
     border-radius: 3px;
+    display: inline-block;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
 }
 
-.navbar a:hover {
-    background-color: #232f3e; /* Highlight effect */
+/* Hover Effect with Box Shadow (no size change) */
+.navbar ul li a:hover {
+    background-color: #232f3e; /* Dark blue background on hover */
+    box-shadow: 0 0 0 1px white; /* Simulate a border without affecting layout */
+    outline: none; /* Ensure no outline appears */
 }
 
 /* Main Content */

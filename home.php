@@ -9,7 +9,7 @@
 <body>
     <header class="header">
         <div class="logo-container">
-            <a href="#" class="logo">
+            <a href="home.php" class="logo">
                 <img src="images/logo.png" alt="Amazon Logo">
             </a>
         </div>
