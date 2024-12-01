@@ -130,7 +130,6 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
     echo $searchResults;
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -159,7 +158,7 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
             <li><a href="#">Data Management</a></li>
             <li><a href="#">Leave Management</a></li>
             <li><a href="#">Payroll Report</a></li>
-            <li><a href="#">Birthdays</a></li>
+            <li><a href="birthdays.php">Birthdays</a></li>
             <li><a href="#">Terminations</a></li>
         </ul>
     </nav>

@@ -1,0 +1,54 @@
+/* Assuming you have a global font set earlier in your styles */
+
+body {
+    font-family: 'Arial', sans-serif; /* Or whatever font you've set globally */
+    font-size: 16px; 
+    color: #333;
+}
+
+/* Table styling */
+.employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: 'Arial', sans-serif;  /* Ensure consistency with the global font */
+}
+
+.employee-table th, .employee-table td {
+    padding: 10px;
+    text-align: left;
+    font-family: 'Arial', sans-serif;  /* Use the same font */
+    font-size: 16px;  /* Same font size as rest of page */
+    border-bottom: 1px solid #ddd;
+}
+
+.employee-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #555;
+}
+
+.employee-table td {
+    background-color: #fff;
+}
+
+.employee-table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+.employee-table tr:hover td {
+    background-color: #f1f1f1;
+}
+
+.employee-table td {
+    color: #333;
+}
+
+/* Heading styles */
+h2 {
+    font-family: 'Arial', sans-serif;  /* Same font family for consistency */
+    font-size: 24px;
+    margin: 20px 0;
+    color: #333;
+    text-align: center;
+}
