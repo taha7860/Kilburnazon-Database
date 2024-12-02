@@ -81,7 +81,7 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
         $params = [];
 
         if (!empty($query)) {
-            $where[] = 'name LIKE :query';
+            $where[] = '(name LIKE :query OR hired_date LIKE :query OR id LIKE :query)';
             $params['query'] = "%" . $query . "%";
         }
 
@@ -115,6 +115,7 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
                     <img src="images/profile_picture.webp" alt="Profile Picture" class="profile-pic">
                     <div class="employee-info">
                         <h3>' . $row['name'] . '</h3>
+                        <p><strong>Employee ID:</strong> ' . $row['id'] . '</p>
                         <p><strong>Position:</strong> ' . $row['position_name'] . '</p>
                         <p><strong>Department:</strong> ' . $row['department_name'] . '</p>
                         <p><strong>Office:</strong> ' . $row['office_name'] . '</p>
@@ -155,7 +156,7 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
         <ul>
             <li><a href="home.php">Home</a></li>
             <li><a href="employees.php">Employees</a></li>
-            <li><a href="#">Data Management</a></li>
+            <li><a href="employee_management.php">Employee Management</a></li>
             <li><a href="#">Leave Management</a></li>
             <li><a href="#">Payroll Report</a></li>
             <li><a href="birthdays.php">Birthdays</a></li>
@@ -208,6 +209,7 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
                 <img src="images/profile_picture.webp" alt="Profile Picture" class="profile-pic">
                 <div class="employee-info">
                     <h3>' . $employee['name'] . '</h3>
+                    <p><strong>Employee ID:</strong> ' . $employee['id'] . '</p>
                     <p><strong>Position:</strong> ' . $employee['position_name'] . '</p>
                     <p><strong>Department:</strong> ' . $employee['department_name'] . '</p>
                     <p><strong>Office:</strong> ' . $employee['office_name'] . '</p>

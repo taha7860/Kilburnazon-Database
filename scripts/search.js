@@ -1,6 +1,6 @@
 const originalContent = document.getElementById('results').innerHTML;
 
-function searchEmployee(query) {
+const searchEmployee = (query) => {
     const trimmedQuery = query.trim();
 
     const position = document.getElementById('position-filter').querySelector('select').value;

@@ -1,23 +1,20 @@
 CREATE TABLE Employee (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    position VARCHAR(100) NOT NULL,
-    department VARCHAR(100) NOT NULL,
+    position_id INT NOT NULL,
     salary DECIMAL(10, 2) NOT NULL CHECK (salary > 0),
     email VARCHAR(100) NOT NULL,
     dob DATE NOT NULL,
-    office VARCHAR(100) NOT NULL,
-    home_address VARCHAR(200) NOT NULL,
+    office_id INT NOT NULL,
+    address_id INT NOT NULL,
     hired_date DATE NOT NULL DEFAULT CURRENT_DATE,
     contract VARCHAR(50) NOT NULL DEFAULT 'Full-Time',
-    nin VARCHAR(9) NOT NULL UNIQUE,
-    emergency_name VARCHAR(100),
-    emergency_relationship VARCHAR(50),
-    emergency_phone VARCHAR(15)
+    nin VARCHAR(9) NOT NULL,
+    employment_history TEXT
 );
 
 CREATE TABLE Department (
-    department_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     department_name VARCHAR(100) NOT NULL,
     description TEXT,
     total_employees INT NOT NULL
@@ -35,11 +32,34 @@ CREATE TABLE Position (
 );
 
 CREATE TABLE Address (
-    address_id INT AUTO_INCREMENT PRIMARY KEY,
-    building_number INT NOT NULL,
-    street_name VARCHAR(255) NOT NULL,
-    country VARCHAR(100) NOT NULL,
-    post_code VARCHAR(8) NOT NULL
+    address_id INT NOT NULL PRIMARY KEY,
+    address_line_one VARCHAR(255) NOT NULL,
+    address_line_two VARCHAR(255) DEFAULT NULL,
+    country VARCHAR(100) DEFAULT NULL,
+    post_code VARCHAR(8) DEFAULT NULL
+);
+
+CREATE TABLE EmergencyContact (
+    employee_id INT NOT NULL,
+    emergency_name VARCHAR(100),
+    emergency_relationship VARCHAR(50),
+    emergency_phone VARCHAR(15)
+);
+
+CREATE TABLE Office (
+    office_id INT NOT NULL,
+    address_id INT DEFAULT NULL,
+    office_name VARCHAR(100) NOT NULL,
+    phone_number VARCHAR(16),
+    website VARCHAR(100),
+    average_rating DECIMAL(2,1) DEFAULT NULL CHECK (average_rating >= 0 AND average_rating <= 5)
+);
+
+CREATE TABLE User (
+    employee_id INT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES Employee(id)
 );
 
 INSERT INTO Department (department_name, total_employees)

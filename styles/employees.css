@@ -93,6 +93,7 @@
 
 .employee-info h3, .employee-info h1, .contact-details h2, .employment-history h2 {
     margin: 0;
+    margin-bottom: 15px;
     font-size: 20px;
     font-weight: 600;
     color: #232f3e; /* Dark blue for the name */

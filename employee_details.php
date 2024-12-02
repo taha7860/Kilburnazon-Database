@@ -19,6 +19,7 @@ $employeeInformation = '
     <img src="images/profile_picture.webp" alt="Profile Picture" class="profile-pic">
     <div class="employee-info">
         <h1>' . $employee['name'] . '</h1>
+        <p><strong>Employee ID:</strong> ' . $employee['id'] . '</p>
         <p><strong>Position:</strong> ' . $employee['position_name'] . '</p>
         <p><strong>Department:</strong> ' . $employee['department_name'] . '</p>
         <p><strong>Office:</strong> ' . $employee['office_name'] . '</p>
@@ -29,9 +30,9 @@ $employeeInformation = '
 <div class="contact-details">
     <h2>Contact Details</h2>
     <p><strong>Email:</strong> ' . $employee['email'] . '</p>
-    <p><strong>Emergency Contact Name:</strong> ' . $employee['emergency_name'] . '</p>
-    <p><strong>Emergency Relationship:</strong> ' . $employee['emergency_relationship'] . '</p>
-    <p><strong>Emergency Phone:</strong> ' . $employee['emergency_phone'] . '</p>
+    <p><strong>Emergency Contact Name:</strong> ' . (isset($employee['emergency_name']) && !empty($employee['emergency_name']) ? $employee['emergency_name'] : 'N/A') . '</p>
+    <p><strong>Emergency Relationship:</strong> ' . (isset($employee['emergency_relationship']) && !empty($employee['emergency_relationship']) ? $employee['emergency_relationship'] : 'N/A') . '</p>
+    <p><strong>Emergency Phone:</strong> ' . (isset($employee['emergency_phone']) && !empty($employee['emergency_phone']) ? $employee['emergency_phone'] : 'N/A') . '</p>
 </div>
 
 <div class="employment-history">

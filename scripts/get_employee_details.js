@@ -1,4 +1,4 @@
-function openEmployeeModal(employeeId) {
+const openEmployeeModal = (employeeId) => {
     fetch(`employee_details.php?id=${employeeId}`)
         .then(response => response.text())
         .then(data => {
@@ -9,7 +9,6 @@ function openEmployeeModal(employeeId) {
         .catch(error => console.error('Error fetching employee details:', error));
 }
 
-
-function closeEmployeeModal() {
+const closeEmployeeModal = () => {
     document.getElementById('employeeModal').style.display = 'none';
 }
