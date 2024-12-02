@@ -1,5 +1,5 @@
 <?php
-require 'db_connection';
+require 'db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
@@ -11,7 +11,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'email' => $email
     ]);
 
-    $matching_email = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        if (password_verify($password, $user['password'])) {
+            $sql = 'SELECT * FROM Employee e
+            LEFT JOIN Position p ON e.position_id = p.position_id
+            LEFT JOIN Department d ON d.department_id = p.department_id
+            WHERE id = :id';
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([
+                'id' => $user['employee_id']
+            ]);
+            $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $_SESSION['user_id'] = $user['employee_id'];
+            $_SESSION['email'] = $user['email'];
+            if ($employee['department_name'] === 'Executive') {
+                header('Location: home.php');
+            } else {
+                header('Location: non_executive_home.php');
+            }
+            exit();
+        } else {
+            echo 'Incorrect password';
+        }
+    } else {
+        echo 'No account registered with this email.';
+    }
 }
 ?>
 

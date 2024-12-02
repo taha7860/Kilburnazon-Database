@@ -66,3 +66,15 @@ main {
     font-family: Arial, sans-serif;
     font-size: 18px;
 }
+
+/* Styling for disabled links */
+.navbar .disabled {
+    color: #ccc; /* Gray color for disabled links */
+    pointer-events: none; /* Prevent clicking */
+    text-decoration: none; /* No underline */
+}
+.navbar .lock-icon {
+    font-size: 12px;
+    color: #ccc; /* Match lock color with disabled links */
+    margin-left: 5px;
+}
