@@ -16,10 +16,10 @@
     </header>
     <nav class="navbar">
         <ul>
-            <li><a href="home.php">Home</a></li>
+            <li><a href="non_executive_home.php">Home</a></li>
             <li><a href="#" class="disabled">Employees <span class="lock-icon">🔒</span></a></li>
             <li><a href="#" class="disabled">Employee Management <span class="lock-icon">🔒</span></a></li>
-            <li><a href="leave_management.php">Leave Management</a></li>
+            <li><a href="leave_request.php">Leave Request</a></li>
             <li><a href="#" class="disabled">Payroll Report <span class="lock-icon">🔒</span></a></li>
             <li><a href="#" class="disabled">Birthdays <span class="lock-icon">🔒</span></a></li>
             <li><a href="#" class="disabled">Terminations <span class="lock-icon">🔒</span></a></li>
@@ -27,7 +27,7 @@
     </nav>
     <main>
         <h1>Restricted Access Page</h1>
-        <p>You only have access to Home and Leave Management sections.</p>
+        <p>As a non-executive employee, you only have the ability to make leave requests.</p>
     </main>
 </body>
 </html>

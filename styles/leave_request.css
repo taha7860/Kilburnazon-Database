@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 20px auto;
+    text-align: center;
+    color: #333;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.leave-request-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e6e6e6;
+}
+
+.leave-request-form .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.leave-request-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.leave-request-form input,
+.leave-request-form select,
+.leave-request-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.leave-request-form input:focus,
+.leave-request-form select:focus,
+.leave-request-form textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.leave-request-form textarea {
+    resize: vertical;
+}
+
+.leave-request-form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.leave-request-form button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+.leave-request-form button:active {
+    background-color: #003f7f;
+    transform: translateY(1px);
+}
+
+.leave-request-form .form-footer {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.leave-request-form .form-footer a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.leave-request-form .form-footer a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    display: none;
+    color: red;
+    background-color: #ffe5e5;
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.error-message.visible {
+    display: block;
+}

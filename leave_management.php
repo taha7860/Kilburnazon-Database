@@ -25,8 +25,6 @@
             <li><a href="terminations.php">Terminations</a></li>
         </ul>
     </nav>
-    <main>
-        <h1>Welcome to Kilburnazon</h1>
-    </main>
+    
 </body>
 </html>

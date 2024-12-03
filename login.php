@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $user['password'])) {
             $sql = 'SELECT * FROM Employee e
             LEFT JOIN Position p ON e.position_id = p.position_id
-            LEFT JOIN Department d ON d.department_id = p.department_id
             WHERE id = :id';
             $stmt = $conn->prepare($sql);
             $stmt->execute([
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $_SESSION['user_id'] = $user['employee_id'];
             $_SESSION['email'] = $user['email'];
-            if ($employee['department_name'] === 'Executive') {
+            if ($employee['is_executive']) {
                 header('Location: home.php');
             } else {
                 header('Location: non_executive_home.php');

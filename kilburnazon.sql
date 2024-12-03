@@ -71,6 +71,14 @@ CREATE TABLE EmployeeAudit (
 	FOREIGN KEY (deleted_by_user_id) REFERENCES User(employee_id)
 );
 
+CREATE TABLE LeaveManagement (
+    employee_id INT PRIMARY KEY,
+    employment_years INT NOT NULL,
+    annual_leave_allowed INT NOT NULL,
+    annual_leave_left INT NOT NULL,
+    FOREIGN KEY (employee_id) REFERENCES Employee(id)
+);
+
 INSERT INTO Department (department_name, total_employees)
 SELECT department, COUNT(id)
 FROM Employee

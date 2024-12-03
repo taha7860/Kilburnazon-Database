@@ -43,7 +43,7 @@ function timeDifference($dob) {
             <li><a href="home.php">Home</a></li>
             <li><a href="employees.php">Employees</a></li>
             <li><a href="employee_management.php">Employee Management</a></li>
-            <li><a href="#">Leave Management</a></li>
+            <li><a href="leave_management.php">Leave Management</a></li>
             <li><a href="#">Payroll Report</a></li>
             <li><a href="birthdays.php">Birthdays</a></li>
             <li><a href="terminations.php">Terminations</a></li>
