@@ -13,18 +13,6 @@ if (!empty($_POST) && $_POST['action'] === 'delete') {
     $employee = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($employee) {
-        $sql = 'DELETE FROM EmergencyContact WHERE employee_id = :employee_id';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([
-            'employee_id' => $employee['id']
-        ]);
-
-        $sql = 'DELETE FROM User WHERE employee_id = :employee_id';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([
-            'employee_id' => $employee['id']
-        ]);
-
         $sql = 'DELETE FROM Employee WHERE id = :id';
         $stmt = $conn->prepare($sql);
         $stmt->execute([

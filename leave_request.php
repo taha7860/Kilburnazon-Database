@@ -1,3 +1,41 @@
+<?php
+session_start();
+require 'db_connection.php';
+
+$successMessage = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $leave_type = $_POST['leave_type'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $reason = $_POST['reason'];
+    $employee_id = $_SESSION['user_id'];
+
+    $sql = 'SELECT * FROM Employee WHERE id = :id';
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        'id' => $employee_id
+    ]);
+    $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($employee) {
+        $sql = 'INSERT INTO LeaveTable (leave_type, employee_id, start_date, end_date, reason)
+        VALUES (:leave_type, :employee_id, :start_date, :end_date, :reason)';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            'leave_type' => $leave_type,
+            'employee_id' => $employee_id,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'reason' => $reason
+        ]);
+        $successMessage = 'Your leave request has been successfully submitted!';
+    } else {
+        echo 'User not logged in.';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +68,12 @@
 
     <main>
         <h1>Leave Request Form</h1>
+        <?php if (!empty($successMessage)) {
+            $message = '<div class="success-message">';
+            $message .= $successMessage;
+            $message .= '</div>';
+            echo $message;
+        } ?>
         <form action="" method="POST" class="leave-request-form">
             <div class="form-group">
                 <label for="leave_type">Type of Leave:</label>
