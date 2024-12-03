@@ -46,7 +46,7 @@ function timeDifference($dob) {
             <li><a href="#">Leave Management</a></li>
             <li><a href="#">Payroll Report</a></li>
             <li><a href="birthdays.php">Birthdays</a></li>
-            <li><a href="#">Terminations</a></li>
+            <li><a href="terminations.php">Terminations</a></li>
         </ul>
     </nav>
     <h2>Employee Birthdays for <?php echo $currentMonth ?></h2>

@@ -45,7 +45,7 @@ $offices = $query->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="#">Leave Management</a></li>
             <li><a href="#">Payroll Report</a></li>
             <li><a href="birthdays.php">Birthdays</a></li>
-            <li><a href="#">Terminations</a></li>
+            <li><a href="terminations.php">Terminations</a></li>
         </ul>
     </nav>
     <div class="container">
@@ -186,9 +186,17 @@ $offices = $query->fetchAll(PDO::FETCH_ASSOC);
                 <button type="submit" class="btn">Promote Employee</button>
             </form>
         </section>
+
+        <?php if (!empty($successMessageDelete)) {
+            $message = '<div class="success-message">';
+            $message .= $successMessageDelete;
+            $message .= '</div>';
+            echo $message;
+        } ?>
         <section class="delete-employee">
             <h2>Delete Employee</h2>
             <form method="POST">
+                <input type="hidden" name="action" value="delete">
                 <div class="form-group">
                     <label for="employee_id">Employee ID:</label>
                     <input type="number" id="employee_id" name="employee_id" required placeholder="Enter employee's ID to delete">

@@ -62,6 +62,15 @@ CREATE TABLE User (
     FOREIGN KEY (employee_id) REFERENCES Employee(id)
 );
 
+CREATE TABLE EmployeeAudit (
+    audit_id INT AUTO_INCREMENT PRIMARY KEY,
+    deleted_employee_name VARCHAR(255) NOT NULL,
+    deleted_employee_email VARCHAR(255) NOT NULL,
+    deleted_by_user_id INT NOT NULL,
+    deletion_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (deleted_by_user_id) REFERENCES User(employee_id)
+);
+
 INSERT INTO Department (department_name, total_employees)
 SELECT department, COUNT(id)
 FROM Employee

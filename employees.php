@@ -160,7 +160,7 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
             <li><a href="#">Leave Management</a></li>
             <li><a href="#">Payroll Report</a></li>
             <li><a href="birthdays.php">Birthdays</a></li>
-            <li><a href="#">Terminations</a></li>
+            <li><a href="terminations.php">Terminations</a></li>
         </ul>
     </nav>
     <div class="search-filter-container">

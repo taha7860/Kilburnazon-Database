@@ -37,12 +37,3 @@ h2 {
 .employee-table tr:hover {
     background-color: #eaeaea;
 }
-
-.employee-table td {
-    color: #555;
-}
-
-.employee-table td:nth-child(5) {
-    font-weight: bold;
-    color: #007bff;
-}
