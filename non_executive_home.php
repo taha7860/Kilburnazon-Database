@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+if (empty($_SESSION['user_id'])) {
+    echo 'Access denied.';
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -1,0 +1,169 @@
+/* Main Content Styling */
+main {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Heading */
+h2 {
+    font-size: 1.8rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+form select,
+form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form button {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #28a745;
+}
+
+form .export-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+form .export-buttons button {
+    width: 48%;
+    background-color: #28a745;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+form .export-buttons button:hover {
+    background-color: #218838;
+}
+
+form select:focus,
+form button:focus {
+    outline: none;
+    border-color: #005bb5;
+}
+
+/* Specific Styling for the Payroll Report Form */
+form#report-form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+form#report-form select {
+    width: 48%;
+    display: inline-block;
+    margin-right: 4%;
+}
+
+form#report-form select:last-child {
+    margin-right: 0;
+}
+
+/* Styling for Export Buttons Form */
+form#export-form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* Payroll Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 40px;
+    background-color: #f9f9f9;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+table th {
+    background-color: #f1f1f1;
+    color: #333;
+    font-weight: bold;
+}
+
+table td {
+    color: #555;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+table td[colspan="11"] {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+table .empty {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+}
+
+/* Export Button Styles */
+.export-buttons {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.export-buttons button {
+    padding: 10px 20px;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Make buttons align horizontally */
+}
+
+.export-buttons button:hover {
+    background-color: #0099cc;
+}
+
+.export-buttons button:active {
+    background-color: #0077b3;
+}

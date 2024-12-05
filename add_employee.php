@@ -29,8 +29,8 @@ if (!empty($_POST) && $_POST['action'] === 'add') {
     $lastInsertedAddressId = $conn->lastInsertId();
 
     try {
-        $sql = 'INSERT INTO Employee (name, email, position_id, office_id, salary, dob, nin, contract, address_id) 
-        VALUES (:name, :email, :position_id, :office_id, :salary, :dob, :nin, :contract, :address_id)';
+        $sql = 'INSERT INTO Employee (name, email, position_id, office_id, dob, nin, contract, address_id) 
+        VALUES (:name, :email, :position_id, :office_id, :dob, :nin, :contract, :address_id)';
     
         $stmt = $conn->prepare($sql);
         $stmt->execute([
@@ -38,7 +38,6 @@ if (!empty($_POST) && $_POST['action'] === 'add') {
             'email' => $email,
             'position_id' => $position,
             'office_id' => $office,
-            'salary' => $salary,
             'dob' => $dob,
             'nin' => $nin,
             'contract' => $contract,
@@ -56,6 +55,15 @@ if (!empty($_POST) && $_POST['action'] === 'add') {
             'emergency_name' => $emergency_name,
             'emergency_relationship' => $emergency_relationship,
             'emergency_phone' => $emergency_phone
+        ]);
+
+        $sql = 'INSERT INTO Payroll (employee_id, base_salary) 
+        VALUES (:employee_id, :salary)';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            'employee_id' => $lastInsertedEmployeeId,
+            'salary' => $salary
         ]);
 
         $successMessageAdd = 'New employee ' . $name . ' (with ID: ' . $lastInsertedEmployeeId . ') added successfully!';

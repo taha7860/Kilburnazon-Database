@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (empty($_SESSION['user_id']) || $_SESSION['user_role'] !== 'executive') {
+    echo 'Access denied.';
+    exit;
+}
+
 require 'db_connection.php';
 
 $sql = 'SELECT * FROM LeaveTable lt
@@ -24,8 +30,9 @@ $sql = 'SELECT
     COALESCE(SUM(CASE WHEN lt.leave_type = "holiday" THEN DATEDIFF(lt.end_date, lt.start_date) + 1 ELSE 0 END), 0) AS holiday_days,
     COALESCE(SUM(CASE WHEN lt.leave_type = "personal" THEN DATEDIFF(lt.end_date, lt.start_date) + 1 ELSE 0 END), 0) AS personal_days,
     COUNT(DISTINCT lt.leave_id) AS total_leave_requests,
-    COUNT(DISTINCT e.id) AS total_employees_in_dept,
-    (COALESCE(SUM(DATEDIFF(lt.end_date, lt.start_date) + 1), 0) / COUNT(DISTINCT e.id)) AS avg_absence_rate
+    COUNT(DISTINCT lt.employee_id) AS total_employees_in_dept,
+    (COALESCE(SUM(DATEDIFF(lt.end_date, lt.start_date) + 1), 0) / 
+    CASE WHEN COUNT(DISTINCT lt.employee_id) = 0 THEN 1 ELSE COUNT(DISTINCT lt.employee_id) END) AS avg_absence_rate
 FROM
     Department d
 LEFT JOIN Position p ON d.department_id = p.department_id
@@ -36,7 +43,6 @@ GROUP BY
 ORDER BY
     d.department_name;
 ';
-
 
 $stmt = $conn->prepare($sql);
 $stmt->execute([
@@ -87,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['status'])) {
             <li><a href="employees.php">Employees</a></li>
             <li><a href="employee_management.php">Employee Management</a></li>
             <li><a href="leave_management.php">Leave Management</a></li>
-            <li><a href="#">Payroll Report</a></li>
+            <li><a href="payroll_report.php">Payroll Report</a></li>
             <li><a href="birthdays.php">Birthdays</a></li>
             <li><a href="terminations.php">Terminations</a></li>
         </ul>

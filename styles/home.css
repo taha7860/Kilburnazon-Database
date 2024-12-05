@@ -78,3 +78,23 @@ main {
     color: #ccc; /* Match lock color with disabled links */
     margin-left: 5px;
 }
+
+/* Paragraph styling */
+main p {
+    font-size: 1.125rem; /* Slightly larger than normal text for readability */
+    color: #555;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 900px;  /* Slightly wider to give more breathing room */
+    margin: 0 auto;    /* Center the paragraph */
+    padding: 20px 30px;  /* Comfortable padding on all sides */
+    background-color: #ffffff;  /* White background for a clean, modern look */
+    margin-top: 20px; /* Space between the heading and paragraph */
+}
+
+/* Optional: Add a subtle hover effect for better interactivity */
+main p:hover {
+    transform: translateY(-2px); /* A little lift effect */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* Slightly more intense shadow */
+    transition: all 0.2s ease; /* Smooth transition */
+}

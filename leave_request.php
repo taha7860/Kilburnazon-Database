@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if (empty($_SESSION['user_id'])) {
+    echo 'Access denied.';
+    exit;
+}
+
 require 'db_connection.php';
 
 $successMessage = '';

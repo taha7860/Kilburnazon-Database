@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 if (!empty($_POST) && $_POST['action'] === 'delete') {
     $employee_id = $_POST['employee_id'];
     $leave_note = $_POST['leave_note'];

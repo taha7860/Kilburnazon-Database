@@ -1,4 +1,11 @@
 <?php
+session_start();
+
+if (empty($_SESSION['user_id']) || $_SESSION['user_role'] !== 'executive') {
+    echo 'Access denied.';
+    exit;
+}
+
 require 'db_connection.php';
 
 $stmt = $conn->query('SELECT * FROM EmployeeAudit');
@@ -28,9 +35,9 @@ $audits = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="employees.php">Employees</a></li>
             <li><a href="employee_management.php">Employee Management</a></li>
             <li><a href="leave_management.php">Leave Management</a></li>
-            <li><a href="#">Payroll Report</a></li>
+            <li><a href="payroll_report.php">Payroll Report</a></li>
             <li><a href="birthdays.php">Birthdays</a></li>
-            <li><a href="#">Terminations</a></li>
+            <li><a href="terminations.php">Terminations</a></li>
         </ul>
     </nav>
     <h2>Terminated Employees</h2>

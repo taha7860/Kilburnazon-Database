@@ -91,6 +91,18 @@ CREATE TABLE LeaveTable (
     FOREIGN KEY (employee_id) REFERENCES Employee(id)
 );
 
+CREATE TABLE Payroll (
+    employee_id INT NOT NULL PRIMARY KEY,
+    base_salary DECIMAL(10, 2) NOT NULL,
+    bonus DECIMAL(10, 2) DEFAULT 0,
+    allowance DECIMAL(10, 2) DEFAULT 0,
+    tax DECIMAL(10, 2) DEFAULT 0,
+    insurance DECIMAL(10, 2) DEFAULT 0,
+    retirement DECIMAL(10, 2) DEFAULT 0,
+    net_pay DECIMAL(10, 2) GENERATED ALWAYS AS (base_salary + bonus + allowance - (tax + insurance + retirement)) STORED,
+    FOREIGN KEY (employee_id) REFERENCES Employee(id) ON DELETE CASCADE
+);
+
 INSERT INTO Position (position_name, department_id)
 SELECT DISTINCT e.position, d.department_id
 FROM Employee e

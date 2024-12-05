@@ -28,8 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['employee_id'];
             $_SESSION['email'] = $user['email'];
             if ($employee['is_executive']) {
+                $_SESSION['user_role'] = 'executive';
                 header('Location: home.php');
             } else {
+                $_SESSION['user_role'] = 'employee';
                 header('Location: non_executive_home.php');
             }
             exit();

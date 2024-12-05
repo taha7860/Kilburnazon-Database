@@ -4,7 +4,7 @@ if (!empty($_POST) && $_POST['action'] === 'promote') {
     $pay_rise = $_POST['payrise_percentage'] / 100;
 
     try {
-        $sql = 'UPDATE Employee SET salary = salary * (1 + :pay_rise) WHERE id = :id';
+        $sql = 'UPDATE Payroll SET salary = salary * (1 + :pay_rise) WHERE id = :id';
         $stmt = $conn->prepare($sql);
         $stmt->execute([
             'id' => $employee_id,
