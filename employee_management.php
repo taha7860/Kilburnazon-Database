@@ -187,7 +187,7 @@ $offices = $query->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="form-group">
                     <label for="payrise_percentage">Pay Rise Percentage (%):</label>
-                    <input type="number" id="payrise_percentage" name="payrise_percentage" required placeholder="Enter percentage of pay rise">
+                    <input type="number" id="payrise_percentage" name="payrise_percentage" required placeholder="Enter percentage of pay rise" step="0.01">
                 </div>
 
                 <button type="submit" class="btn">Promote Employee</button>

@@ -7,10 +7,10 @@ function updatePayrollReport() {
     const departmentParam = department === "" ? "" : department;
 
     fetch(`payroll_report.php?department=${encodeURIComponent(departmentParam)}&period_type=${encodeURIComponent(periodType)}`)
-        .then(response => response.json())  // Parse the JSON response
+        .then(response => response.json())
         .then(data => {
             const tableBody = document.getElementById("payroll-table-body");
-            tableBody.innerHTML = ""; // Clear existing rows
+            tableBody.innerHTML = "";
 
             if (data.length === 0) {
                 const row = document.createElement("tr");
