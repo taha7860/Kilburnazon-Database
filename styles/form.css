@@ -7,7 +7,7 @@ body, h2, p, form, input, button, div {
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    background: var(--primary-colour);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -65,8 +65,7 @@ body {
 
 /* Buttons */
 button {
-    background: #2575fc;
-    color: white;
+    background: rgb(239, 144, 53);
     border: none;
     padding: 12px 20px;
     border-radius: 8px;
@@ -78,7 +77,7 @@ button {
 }
 
 button:hover {
-    background: #6a11cb;
+    background: red;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
@@ -127,3 +126,20 @@ small {
     text-decoration: underline;
 }
 
+/* Style for floating error message at the top */
+.error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    z-index: 9999;
+    width: auto;
+    max-width: 80%;
+    text-align: center;
+}

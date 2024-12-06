@@ -41,7 +41,7 @@ if (isset($_GET['query']) || isset($_GET['position']) || isset($_GET['department
         $params = [];
 
         if (!empty($query)) {
-            $where[] = '(name LIKE :query OR hired_date LIKE :query OR id LIKE :query)';
+            $where[] = '(name LIKE :query OR id LIKE :query)';
             $params['query'] = "%" . $query . "%";
         }
 

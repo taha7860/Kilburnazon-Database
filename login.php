@@ -2,6 +2,8 @@
 session_start();
 require 'db_connection.php';
 
+$message = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -36,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             exit();
         } else {
-            echo 'Incorrect password';
+            $message = 'Incorrect password';
         }
     } else {
-        echo 'No account registered with this email.';
+        $message = 'No account registered with this email.';
     }
 }
 ?>
@@ -50,9 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/form.css">
 </head>
 <body>
+    <?php if (!empty($message)): ?>
+        <div class="error-message"><?= $message; ?></div>
+    <?php endif; ?>
     <div class="form-container">
         <h2>Login</h2>
         <form method="POST" action="">

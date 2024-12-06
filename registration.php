@@ -1,6 +1,8 @@
 <?php
 require 'db_connection.php';
 
+$message = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
@@ -38,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         }   
     } else {
-        echo 'Employee not in our records';
+        $message = 'Employee not in our records';
     }
 }
 ?>
@@ -49,10 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+    <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/form.css">
     <script src="scripts/password_matching.js" defer></script>
 </head>
 <body>
+    <?php if (!empty($message)): ?>
+        <div class="error-message"><?= $message; ?></div>
+    <?php endif; ?>
     <div class="form-container">
         <h2>Register</h2>
         <form id="registrationForm" method="POST" action="">
@@ -62,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                <input type="password" id="password" name="password" minlength="8"
+                pattern='.*\d.*[!@#$%^&*(),.?\":{}|<>].*' required placeholder="Enter your password">
             </div>
             <div class="form-group">
                 <label for="confirm_password">Confirm Password:</label>
