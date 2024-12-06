@@ -8,11 +8,6 @@ if (empty($_SESSION['user_id']) || $_SESSION['user_role'] !== 'executive') {
 
 require 'db_connection.php';
 
-$currentMonth = date('F');
-
-$query = $conn->query('SELECT * FROM Employee WHERE MONTH(dob) = MONTH(CURRENT_DATE()) ORDER BY DAY(dob)');
-$employees = $query->fetchAll(PDO::FETCH_ASSOC);
-
 function timeDifference($dob) {
     $today = new DateTime();
     $birthday = DateTime::createFromFormat('Y-m-d', $dob);
@@ -26,6 +21,11 @@ function timeDifference($dob) {
     }
     return $res;
 }
+
+$currentMonth = date('F');
+
+$query = $conn->query('SELECT * FROM Employee WHERE MONTH(dob) = MONTH(CURRENT_DATE()) ORDER BY DAY(dob)');
+$employees = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

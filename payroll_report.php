@@ -6,13 +6,59 @@ if (empty($_SESSION['user_id']) || $_SESSION['user_role'] !== 'executive') {
     exit;
 }
 
-require 'db_connection.php';
+require_once 'db_connection.php';
+require 'csv_export.php';
+require 'pdf_export.php';
+
+function calculatePayrollValues($base_salary) {
+    $bonus = $base_salary * 0.10;
+    $allowance = $base_salary * 0.05;
+    $tax = $base_salary * 0.15;
+    $insurance = $base_salary * 0.05;
+    $retirement = $base_salary * 0.05;
+    return [
+        'bonus' => $bonus,
+        'allowance' => $allowance,
+        'tax' => $tax,
+        'insurance' => $insurance,
+        'retirement' => $retirement
+    ];
+}
+
+$sql = "SELECT * FROM Payroll";
+$stmt = $conn->query($sql);
+$employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+foreach ($employees as $employee) {
+    $employee_id = $employee['employee_id'];
+    $base_salary = $employee['base_salary'];
+
+    $payroll_data = calculatePayrollValues($base_salary);
+
+    $update_sql = "UPDATE Payroll 
+                   SET bonus = :bonus, 
+                       allowance = :allowance, 
+                       tax = :tax, 
+                       insurance = :insurance, 
+                       retirement = :retirement
+                   WHERE employee_id = :employee_id";
+
+    $stmt = $conn->prepare($update_sql);
+    $stmt->execute([
+        ':bonus' => $payroll_data['bonus'],
+        ':allowance' => $payroll_data['allowance'],
+        ':tax' => $payroll_data['tax'],
+        ':insurance' => $payroll_data['insurance'],
+        ':retirement' => $payroll_data['retirement'],
+        ':employee_id' => $employee_id
+    ]);
+}
 
 $query = $conn->query('SELECT * FROM Department');
-$departments = $query->fetchAll(PDO::FETCH_ASSOC); 
+$departments = $query->fetchAll(PDO::FETCH_ASSOC);
 
-$period_type = isset($_POST['period_type']) ? $_POST['period_type'] : 'annual';
-$start_date = $end_date = '';
+$period_type = isset($_GET['period_type']) ? $_GET['period_type'] : 'annual';
+$department_id = isset($_GET['department']) ? $_GET['department'] : null;
 
 $sql = "SELECT 
             e.id AS employee_id, 
@@ -31,18 +77,14 @@ $sql = "SELECT
         LEFT JOIN Position p ON e.position_id = p.position_id
         LEFT JOIN Department d ON p.department_id = d.department_id";
 
-if (!empty($_POST['department'])) {
-    $sql .= " WHERE d.department_name = :department";
+if ($department_id) {
+    $sql .= " WHERE d.department_id = :department_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['department_id' => $department_id]);
+} else {
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
 }
-
-$stmt = $conn->prepare($sql);
-$params = [];
-
-if (!empty($_POST['department'])) {
-    $params['department'] = $_POST['department'];
-}
-
-$stmt->execute($params);
 $payroll_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($payroll_data as &$row) {
@@ -56,7 +98,6 @@ foreach ($payroll_data as &$row) {
             $row['retirement'] /= 4;
             $row['net_pay'] /= 4;
             break;
-        
         case 'monthly':
             $row['base_salary'] /= 12;
             $row['bonus'] /= 12;
@@ -66,37 +107,25 @@ foreach ($payroll_data as &$row) {
             $row['retirement'] /= 12;
             $row['net_pay'] /= 12;
             break;
-        
         case 'annual':
         default:
-            // No change for annual
             break;
     }
 }
 
-// Export to CSV
-if (isset($_POST['export']) && $_POST['export'] === 'csv') {
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment;filename="payroll_report.csv"');
-    $output = fopen('php://output', 'w');
-    
-    // Output the column headings
-    fputcsv($output, ['Employee ID', 'Name', 'Department', 'Job Title', 'Base Salary', 'Bonus', 'Allowance', 'Tax', 'Insurance', 'Retirement', 'Net Pay']);
-    
-    // Output the data rows
-    foreach ($payroll_data as $row) {
-        fputcsv($output, $row);
+if (isset($_GET['department']) || isset($_GET['period_type'])) {
+    header('Content-Type: application/json');
+    echo json_encode($payroll_data);
+    exit();
+}
+
+if (isset($_POST['export'])) {
+    if ($_POST['export'] == 'csv') {
+        export_to_csv($payroll_data);
+    } elseif ($_POST['export'] == 'pdf') {
+        export_to_pdf($payroll_data);
     }
-
-    fclose($output);
-    exit;
 }
-
-// Export to PDF (you'll need a PDF library like TCPDF or FPDF for actual PDF export)
-if (isset($_POST['export']) && $_POST['export'] === 'pdf') {
-    // Implement PDF export logic here
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -107,6 +136,7 @@ if (isset($_POST['export']) && $_POST['export'] === 'pdf') {
     <title>Amazon Style Home</title>
     <link rel="stylesheet" href="styles/home.css">
     <link rel="stylesheet" href="styles/payroll.css">
+    <script src="scripts/filter_report.js" defer></script>
 </head>
 <body>
     <header class="header">
@@ -134,22 +164,22 @@ if (isset($_POST['export']) && $_POST['export'] === 'pdf') {
         <!-- Form for report generation -->
         <form method="POST">
             <label for="period_type">Time Period:</label>
-            <select name="period_type" id="period_type">
+            <select name="period_type" id="period_type" onchange="updatePayrollReport()">
                 <option value="annual" <?php echo ($period_type == 'annual') ? 'selected' : ''; ?>>Annual</option>
                 <option value="quarterly" <?php echo ($period_type == 'quarterly') ? 'selected' : ''; ?>>Quarterly</option>
                 <option value="monthly" <?php echo ($period_type == 'monthly') ? 'selected' : ''; ?>>Monthly</option>
             </select>
 
             <label for="department">Department:</label>
-            <select name="department">
+            <select id="department" onchange="updatePayrollReport()">
                 <option value="">All Departments</option>
                 <?php foreach ($departments as $department) {
-                        $selected = (isset($_POST['department']) && $_POST['department'] === $department['department_name']) ? 'selected' : '';
-                        echo "<option value=\"{$deptartment['department_name']}\" $selected>{$department['department_name']}</option>";
+                    $output = '<option value="' . htmlspecialchars($department['department_id']) . '" onkeydown>';
+                    $output .= $department['department_name'];
+                    $output .= '</option>';
+                    echo $output;
                 } ?>
             </select>
-
-            <button type="submit">Generate Report</button>
         </form>
 
         <form method="POST">
@@ -181,7 +211,7 @@ if (isset($_POST['export']) && $_POST['export'] === 'pdf') {
                     <th>Net Pay</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="payroll-table-body">
                 <?php if (!empty($payroll_data)) { ?>
                     <?php foreach ($payroll_data as $row) { ?>
                         <tr>
@@ -189,13 +219,13 @@ if (isset($_POST['export']) && $_POST['export'] === 'pdf') {
                             <td><?php echo $row['name']; ?></td>
                             <td><?php echo $row['department_name']; ?></td>
                             <td><?php echo $row['position_name']; ?></td>
-                            <td><?php echo number_format($row['base_salary'], 2); ?></td>
-                            <td><?php echo number_format($row['bonus'], 2); ?></td>
-                            <td><?php echo number_format($row['allowance'], 2); ?></td>
-                            <td><?php echo number_format($row['tax'], 2); ?></td>
-                            <td><?php echo number_format($row['insurance'], 2); ?></td>
-                            <td><?php echo number_format($row['retirement'], 2); ?></td>
-                            <td><?php echo number_format($row['net_pay'], 2); ?></td>
+                            <td><?php echo number_format(is_numeric($row['base_salary']) ? $row['base_salary'] : 0, 2); ?></td>
+                            <td><?php echo number_format(is_numeric($row['bonus']) ? $row['bonus'] : 0, 2); ?></td>
+                            <td><?php echo number_format(is_numeric($row['allowance']) ? $row['allowance'] : 0, 2); ?></td>
+                            <td><?php echo number_format(is_numeric($row['tax']) ? $row['tax'] : 0, 2); ?></td>
+                            <td><?php echo number_format(is_numeric($row['insurance']) ? $row['insurance'] : 0, 2); ?></td>
+                            <td><?php echo number_format(is_numeric($row['retirement']) ? $row['retirement'] : 0, 2); ?></td>
+                            <td><?php echo number_format(is_numeric($row['net_pay']) ? $row['net_pay'] : 0, 2); ?></td>
                         </tr>
                     <?php } ?>
                 <?php } else { ?>

@@ -198,3 +198,11 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+SET GLOBAL event_scheduler = ON;
+
+CREATE EVENT cleanup_audit
+ON SCHEDULE EVERY 1 DAY STARTS '2024-12-06 00:00:00'
+DO
+DELETE FROM EmployeeAudit WHERE deletion_time < NOW() - INTERVAL 3 YEAR;
